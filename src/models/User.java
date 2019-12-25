@@ -33,6 +33,10 @@ public class User {
 		this.freeTrialEnd = userFromDB.get("free_trial_end");
 	}
 
+	public String toString() {
+		return this.ID + ": " + this.username;
+	}
+	
 	public String getID() {
 		return ID;
 	}

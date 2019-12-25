@@ -635,8 +635,8 @@ public class AdminWindow extends JFrame {
 
     private void jlUserListMouseClicked(MouseEvent evt) {//GEN-FIRST:event_jlUserListMouseClicked
         // TODO add your handling code here:
-
-        UserDetailWindow userDetail = new UserDetailWindow();
+    	User user = userList.get(jlUserList.getSelectedIndex());
+        UserDetailWindow userDetail = new UserDetailWindow(user);
         userDetail.setVisible(true);
     }//GEN-LAST:event_jlUserListMouseClicked
 
@@ -684,9 +684,6 @@ public class AdminWindow extends JFrame {
 
     private void jbtnSignOutMouseClicked(MouseEvent evt) {//GEN-FIRST:event_jbtnSignOutMouseClicked
         // TODO add your handling code here:
-        //this.hide();
-        //LoginSW LS= new LoginSW();
-        //LS.setVisible(true);
         jpanAction.removeAll();
         jpanAction.repaint();
         jpanAction.revalidate();
@@ -716,7 +713,7 @@ public class AdminWindow extends JFrame {
 
     private void jtfSearchUsersActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jtfSearchUsersActionPerformed
         // TODO add your handling code here:
-    	List<User> userList = new ArrayList<User>();
+    	userList = new ArrayList<User>();
     	
     	try (Connection connection = DriverManager.getConnection(
     			"jdbc:postgresql://localhost:5432/rentio", "postgres", "sesame")) {
@@ -750,6 +747,21 @@ public class AdminWindow extends JFrame {
     	catch (Exception exc) {
     		exc.printStackTrace();
     	}
+    	
+    	jlUserList.setModel(new AbstractListModel<String>() {
+    		/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			public int getSize() {
+    			return userList.size();
+    		}
+    		
+    		public String getElementAt(int i) {
+    			return userList.get(i).toString();
+    		}
+		});
     }//GEN-LAST:event_jtfSearchUsersActionPerformed
 
     /**
@@ -825,5 +837,6 @@ public class AdminWindow extends JFrame {
     private JTextField jtfSearchProducts;
     private JTextField jtfSearchReportedUsers;
     private JTextField jtfSearchUsers;
+    private List<User> userList;
     // End of variables declaration//GEN-END:variables
 }

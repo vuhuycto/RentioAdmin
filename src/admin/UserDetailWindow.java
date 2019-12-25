@@ -5,6 +5,25 @@
  */
 package admin;
 
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+import javax.swing.GroupLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.LayoutStyle;
+import javax.swing.WindowConstants;
+
+import models.User;
+
 /**
  *
  * @author Dell Precision
@@ -18,8 +37,8 @@ public class UserDetailWindow extends javax.swing.JFrame {
 	/**
      * Creates new form UserDetail
      */
-    public UserDetailWindow() {
-        initComponents();
+    public UserDetailWindow(User user) {
+        initComponents(user);
     }
 
     /**
@@ -29,203 +48,187 @@ public class UserDetailWindow extends javax.swing.JFrame {
      */
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
-    private void initComponents() {
-
+    private void initComponents(User user) {
+    	setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	
         jpanUserDetail = new javax.swing.JPanel();
-        jtfSex = new javax.swing.JTextField();
-        jtfPhoneNumber = new javax.swing.JTextField();
-        jtfName = new javax.swing.JTextField();
-        jtfUserID = new javax.swing.JTextField();
-        jtfAge = new javax.swing.JTextField();
-        jlbUserID = new javax.swing.JLabel();
-        jlbAge = new javax.swing.JLabel();
-        jlbPhoneNumber = new javax.swing.JLabel();
-        jlbSex = new javax.swing.JLabel();
-        jlbName = new javax.swing.JLabel();
-        jbtnDeleteUser = new javax.swing.JButton();
-        jbtnBack = new javax.swing.JButton();
-        jbtnSave = new javax.swing.JButton();
+        jtfSex = new JTextField(user.getGender());
+        jtfPhoneNumber = new JTextField(user.getPhone());
+        jtfName = new JTextField(user.getFirstName() + " " + user.getLastName());
+        jtfUserID = new JTextField(user.getID());
+        jtfBirthday = new JTextField(user.getBirthday());
+        jlbUserID = new JLabel();
+        jlbBirthday = new JLabel();
+        jlbPhoneNumber = new JLabel();
+        jlbSex = new JLabel();
+        jlbName = new JLabel();
+        jbtnDeleteUser = new JButton();
+        jbtnBack = new JButton();
+        jbtnSave = new JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setBackground(new java.awt.Color(255, 255, 255));
-        setForeground(java.awt.Color.white);
+        setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new Color(255, 255, 255));
+        setForeground(Color.white);
 
-        jpanUserDetail.setBackground(new java.awt.Color(255, 255, 255));
+        jpanUserDetail.setBackground(new Color(255, 255, 255));
 
-        jlbUserID.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbUserID.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jlbUserID.setText("User ID");
 
-        jlbAge.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
-        jlbAge.setText("Age");
+        jlbBirthday.setFont(new Font("Tahoma", 0, 28)); // NOI18N
+        jlbBirthday.setText("Birthday");
 
-        jlbPhoneNumber.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbPhoneNumber.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jlbPhoneNumber.setText("Phone Number");
 
-        jlbSex.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
-        jlbSex.setText("Sex ");
+        jlbSex.setFont(new Font("Tahoma", 0, 28)); // NOI18N
+        jlbSex.setText("Gender ");
 
-        jlbName.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jlbName.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jlbName.setText("Name ");
 
-        jbtnDeleteUser.setBackground(new java.awt.Color(255, 255, 255));
-        jbtnDeleteUser.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jbtnDeleteUser.setBackground(new Color(255, 255, 255));
+        jbtnDeleteUser.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jbtnDeleteUser.setText("Delete");
-        jbtnDeleteUser.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbtnDeleteUser.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 jbtnDeleteUserActionPerformed(evt);
             }
         });
 
-        jbtnBack.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jbtnBack.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jbtnBack.setText("Back");
-        jbtnBack.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
+        jbtnBack.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
                 jbtnBackActionPerformed(evt);
             }
         });
 
-        jbtnSave.setFont(new java.awt.Font("Tahoma", 0, 28)); // NOI18N
+        jbtnSave.setFont(new Font("Tahoma", 0, 28)); // NOI18N
         jbtnSave.setText("Save");
+        jbtnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				jbtnSaveActionPerformed(evt);
+			}
+		});
 
-        javax.swing.GroupLayout jpanUserDetailLayout = new javax.swing.GroupLayout(jpanUserDetail);
+        javax.swing.GroupLayout jpanUserDetailLayout = new GroupLayout(jpanUserDetail);
         jpanUserDetail.setLayout(jpanUserDetailLayout);
         jpanUserDetailLayout.setHorizontalGroup(
-            jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jpanUserDetailLayout.createSequentialGroup()
                 .addGap(121, 121, 121)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jlbName, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbAge, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbSex, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jlbName, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbUserID, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbBirthday, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbSex, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbPhoneNumber, GroupLayout.PREFERRED_SIZE, 196, GroupLayout.PREFERRED_SIZE))
                 .addGap(94, 94, 94)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtfName, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfAge, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfSex, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 394, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfName, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfUserID, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfBirthday, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfSex, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPhoneNumber, GroupLayout.PREFERRED_SIZE, 394, GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(45, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanUserDetailLayout.createSequentialGroup()
+            .addGroup(GroupLayout.Alignment.TRAILING, jpanUserDetailLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jbtnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 207, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnDeleteUser, GroupLayout.PREFERRED_SIZE, 207, GroupLayout.PREFERRED_SIZE)
                 .addGap(360, 360, 360))
             .addGroup(jpanUserDetailLayout.createSequentialGroup()
                 .addGap(74, 74, 74)
-                .addComponent(jbtnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jbtnSave, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnBack, GroupLayout.PREFERRED_SIZE, 140, GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jbtnSave, GroupLayout.PREFERRED_SIZE, 141, GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
         );
         jpanUserDetailLayout.setVerticalGroup(
-            jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(jpanUserDetailLayout.createSequentialGroup()
                 .addGap(44, 44, 44)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jbtnBack, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                    .addComponent(jbtnSave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jbtnBack, GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                    .addComponent(jbtnSave, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 280, Short.MAX_VALUE)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlbUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfUserID, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbUserID, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfUserID, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlbName, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfName, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbName, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfName, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.LEADING)
+                    .addComponent(jtfBirthday, GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jlbBirthday, GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jtfAge, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jlbAge, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlbSex, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfSex, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jpanUserDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jlbPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jtfPhoneNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbSex, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfSex, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jpanUserDetailLayout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+                    .addComponent(jlbPhoneNumber, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jtfPhoneNumber, GroupLayout.PREFERRED_SIZE, 74, GroupLayout.PREFERRED_SIZE))
                 .addGap(42, 42, 42)
-                .addComponent(jbtnDeleteUser, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jbtnDeleteUser, GroupLayout.PREFERRED_SIZE, 95, GroupLayout.PREFERRED_SIZE)
                 .addGap(52, 52, 52))
         );
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        GroupLayout layout = new GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jpanUserDetail, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+            .addComponent(jpanUserDetail, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            layout.createParallelGroup(GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jpanUserDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jpanUserDetail, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 166, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jbtnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
+    private void jbtnBackActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnBackActionPerformed
         // TODO add your handling code here:
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jbtnBackActionPerformed
-
-    private void jbtnDeleteUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteUserActionPerformed
-        
+    
+    private void jbtnDeleteUserActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteUserActionPerformed
         // TODO add your handling code here:
-        dispose();
-    }//GEN-LAST:event_jbtnDeleteUserActionPerformed
-
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(UserDetailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(UserDetailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(UserDetailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(UserDetailWindow.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        try (Connection connection = DriverManager.getConnection(
+        		"jdbc:postgresql://localhost:5432/rentio", "postgres", "sesame")){
+        	
         }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new UserDetailWindow().setVisible(true);
-            }
-        });
-    }
-
+        catch (SQLException exc) {
+    		System.err.format("SQL State: %s\n%s", exc.getSQLState(), exc.getMessage());
+    	}
+    	catch (Exception exc) {
+    		exc.printStackTrace();
+    	}
+    }//GEN-LAST:event_jbtnDeleteUserActionPerformed
+    
+    private void jbtnSaveActionPerformed(ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jbtnSaveActionPerformed
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jbtnBack;
-    private javax.swing.JButton jbtnDeleteUser;
-    private javax.swing.JButton jbtnSave;
-    private javax.swing.JLabel jlbAge;
-    private javax.swing.JLabel jlbName;
-    private javax.swing.JLabel jlbPhoneNumber;
-    private javax.swing.JLabel jlbSex;
-    private javax.swing.JLabel jlbUserID;
-    private javax.swing.JPanel jpanUserDetail;
-    private javax.swing.JTextField jtfAge;
-    private javax.swing.JTextField jtfName;
-    private javax.swing.JTextField jtfPhoneNumber;
-    private javax.swing.JTextField jtfSex;
-    private javax.swing.JTextField jtfUserID;
+    private JButton jbtnBack;
+    private JButton jbtnDeleteUser;
+    private JButton jbtnSave;
+    private JLabel jlbBirthday;
+    private JLabel jlbName;
+    private JLabel jlbPhoneNumber;
+    private JLabel jlbSex;
+    private JLabel jlbUserID;
+    private JPanel jpanUserDetail;
+    private JTextField jtfBirthday;
+    private JTextField jtfName;
+    private JTextField jtfPhoneNumber;
+    private JTextField jtfSex;
+    private JTextField jtfUserID;
     // End of variables declaration//GEN-END:variables
 }
